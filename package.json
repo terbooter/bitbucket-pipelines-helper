@@ -4,7 +4,6 @@
   "description": "Set of utilities for BitBucket Pipelines",
   "main": "dist/index.js",
   "scripts": {
-    "postinstall": "tsc"
   },
   "author": "",
   "license": "ISC",
