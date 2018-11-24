@@ -4,8 +4,6 @@ import * as path from "path";
 
 export class Main {
     public static async main() {
-        let commit = await Git.getLastCommitInfo();
-        console.log(commit);
 
         const args = Args.parse(process.argv);
         const BITBUCKET_BUILD_NUMBER = args[0];
@@ -16,6 +14,9 @@ export class Main {
         console.log(`   Template File: ${templateFile}`);
         let html: string = await Helper.readFile(templateFile);
         console.log(html);
+
+        let commit = await Git.getLastCommitInfo();
+        console.log(commit);
 
     }
 }

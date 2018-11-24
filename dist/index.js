@@ -14,8 +14,6 @@ const path = require("path");
 class Main {
     static main() {
         return __awaiter(this, void 0, void 0, function* () {
-            let commit = yield Git_1.Git.getLastCommitInfo();
-            console.log(commit);
             const args = Args.parse(process.argv);
             const BITBUCKET_BUILD_NUMBER = args[0];
             console.log("--------------- Generating version file -------------");
@@ -24,6 +22,8 @@ class Main {
             console.log(`   Template File: ${templateFile}`);
             let html = yield Helper.readFile(templateFile);
             console.log(html);
+            let commit = yield Git_1.Git.getLastCommitInfo();
+            console.log(commit);
         });
     }
 }
