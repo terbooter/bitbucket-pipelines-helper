@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const git = require("git-last-commit");
 class Git {
-    static getLastCommitInfo() {
+    static getLastCommitInfo(folder) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
                 git.getLastCommit((err, commit) => {
@@ -19,7 +19,7 @@ class Git {
                         return;
                     }
                     resolve(commit);
-                });
+                }, { dst: folder });
             });
         });
     }

@@ -16,14 +16,21 @@ class Main {
         return __awaiter(this, void 0, void 0, function* () {
             const args = Args.parse(process.argv);
             const BITBUCKET_BUILD_NUMBER = args[0];
+            const templateFile = path.resolve(__dirname, "../html/template.html");
             console.log("--------------- Generating version file -------------");
             console.log(`   BitBucket build number: ${BITBUCKET_BUILD_NUMBER}`);
-            const templateFile = path.resolve(__dirname, "../html/template.html");
+            console.log(`   Script cwd: ${process.cwd()}`);
             console.log(`   Template File: ${templateFile}`);
             let html = yield Helper.readFile(templateFile);
-            console.log(html);
-            let commit = yield Git_1.Git.getLastCommitInfo();
-            console.log(commit);
+            let commit = yield Git_1.Git.getLastCommitInfo(process.cwd());
+            const replacements = {
+                BITBUCKET_BUILD_NUMBER,
+                BITBUCKET_BRANCH: commit.notes,
+                BITBUCKET_COMMIT: commit.shortHash,
+                DEPLOY_DATE: (new Date()).toISOString()
+            };
+            let newHtml = Helper.replace(html, replacements);
+            Helper.writeFile("index.html", newHtml);
         });
     }
 }
@@ -41,6 +48,27 @@ class Helper {
                 });
             });
         });
+    }
+    static writeFile(fileName, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                fs.writeFile(fileName, data, (err) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    resolve();
+                });
+            });
+        });
+    }
+    static replace(text, values) {
+        let returnText = text;
+        for (let key in values) {
+            let value = values[key];
+            returnText = returnText.replace(key, value);
+        }
+        return returnText;
     }
 }
 class Args {
