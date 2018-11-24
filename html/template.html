@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Version</title>
+    <style>
+        .commit-hash {
+            font-family: monospace;
+            width: 7ch;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .value {
+            font-family: monospace;
+        }
+
+        body {
+            font-size: 17px;
+        }
+    </style>
+</head>
+<body>
+Build : <strong class="value">BITBUCKET_BUILD_NUMBER</strong><br>
+Branch: <strong class="value">BITBUCKET_BRANCH</strong><br>
+Commit: <strong class="commit-hash" id="hash">BITBUCKET_COMMIT</strong><br>
+Deployed: <strong class="value" id="deploy-date">DEPLOY_DATE</strong><br>
+</body>
+</html>
+<script>
+
+    showFirst7CharsOfCommitSHA();
+    changeUTCDateToLocalDate();
+
+    function showFirst7CharsOfCommitSHA() {
+        let node = document.getElementById("hash");
+        let longHash = node.textContent;
+        let shortHash = longHash.slice(0, 7);
+        node.textContent = shortHash;
+    }
+
+    function changeUTCDateToLocalDate() {
+        let node = document.getElementById("deploy-date");
+        let utcString = node.textContent;
+        let d = new Date(utcString);
+        let localString = `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`;
+        node.textContent = localString;
+    }
+</script>
