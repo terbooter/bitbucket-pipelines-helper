@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true,
+    "noImplicitAny": false,
+    "watch": false,
+    "sourceMap": false,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "removeComments": true,
+    "rootDir": "src",
+    "outDir": "dist"
+  }
+}
