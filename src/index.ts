@@ -2,26 +2,23 @@ import {Git} from "./Git";
 import * as fs from "fs";
 import * as path from "path";
 
-console.log("Start");
+export class Main {
+    public static async main() {
+        let commit = await Git.getLastCommitInfo();
+        console.log(commit);
 
+        const args = Args.parse(process.argv);
+        const BITBUCKET_BUILD_NUMBER = args[0];
+        console.log("--------------- Generating version file -------------");
+        console.log(`   BitBucket build number: ${BITBUCKET_BUILD_NUMBER}`);
 
-async function main() {
-    let commit = await Git.getLastCommitInfo();
-    console.log(commit);
+        const templateFile = path.resolve(__dirname, "../html/template.html");
+        console.log(`   Template File: ${templateFile}`);
+        let html: string = await Helper.readFile(templateFile);
+        console.log(html);
 
-    const args = Args.parse(process.argv);
-    const BITBUCKET_BUILD_NUMBER = args[0];
-    console.log("--------------- Generating version file -------------");
-    console.log(`   BitBucket build number: ${BITBUCKET_BUILD_NUMBER}`);
-
-    const templateFile = path.resolve(__dirname, "../html/template.html");
-    console.log(`   Template File: ${templateFile}`);
-    let html: string = await Helper.readFile(templateFile);
-    console.log(html);
-
+    }
 }
-
-main();
 
 class Helper {
     public static async readFile(fileName): Promise<string> {

@@ -11,22 +11,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Git_1 = require("./Git");
 const fs = require("fs");
 const path = require("path");
-console.log("Start");
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        let commit = yield Git_1.Git.getLastCommitInfo();
-        console.log(commit);
-        const args = Args.parse(process.argv);
-        const BITBUCKET_BUILD_NUMBER = args[0];
-        console.log("--------------- Generating version file -------------");
-        console.log(`   BitBucket build number: ${BITBUCKET_BUILD_NUMBER}`);
-        const templateFile = path.resolve(__dirname, "../html/template.html");
-        console.log(`   Template File: ${templateFile}`);
-        let html = yield Helper.readFile(templateFile);
-        console.log(html);
-    });
+class Main {
+    static main() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let commit = yield Git_1.Git.getLastCommitInfo();
+            console.log(commit);
+            const args = Args.parse(process.argv);
+            const BITBUCKET_BUILD_NUMBER = args[0];
+            console.log("--------------- Generating version file -------------");
+            console.log(`   BitBucket build number: ${BITBUCKET_BUILD_NUMBER}`);
+            const templateFile = path.resolve(__dirname, "../html/template.html");
+            console.log(`   Template File: ${templateFile}`);
+            let html = yield Helper.readFile(templateFile);
+            console.log(html);
+        });
+    }
 }
-main();
+exports.Main = Main;
 class Helper {
     static readFile(fileName) {
         return __awaiter(this, void 0, void 0, function* () {
