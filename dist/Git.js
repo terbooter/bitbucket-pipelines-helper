@@ -9,18 +9,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const git = require("git-last-commit");
+const branch = require("git-branch");
 class Git {
     static getLastCommitInfo(folder) {
         return __awaiter(this, void 0, void 0, function* () {
-            return new Promise((resolve, reject) => {
-                git.getLastCommit((err, commit) => {
-                    if (err) {
-                        reject(err);
-                        return;
-                    }
-                    resolve(commit);
-                }, { dst: folder });
-            });
+            let commit = yield Git.getLastCommitInfoWithBrokenBranch(folder);
+            commit.branch = yield branch(folder);
+            return commit;
+        });
+    }
+    static getLastCommitInfoWithBrokenBranch(folder) {
+        return new Promise((resolve, reject) => {
+            git.getLastCommit((err, commit) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                resolve(commit);
+            }, { dst: folder });
         });
     }
 }

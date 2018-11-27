@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Set of utilities for BitBucket Pipelines",
   "main": "dist/index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "bin": {
     "bitbucket-pipelines-helper": "./bin/index.js"
   },
@@ -12,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "10.12.10",
+    "git-branch": "^2.0.1",
     "git-last-commit": "0.3.0",
     "typescript": "3.1.3"
   }

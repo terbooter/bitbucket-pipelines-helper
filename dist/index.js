@@ -25,7 +25,7 @@ class Main {
             let commit = yield Git_1.Git.getLastCommitInfo(process.cwd());
             const replacements = {
                 BITBUCKET_BUILD_NUMBER,
-                BITBUCKET_BRANCH: commit.notes,
+                BITBUCKET_BRANCH: commit.branch,
                 BITBUCKET_COMMIT: commit.shortHash,
                 DEPLOY_DATE: (new Date()).toISOString()
             };
